@@ -1,0 +1,30 @@
+.app{
+    .builder{
+        display: flex;
+        padding: 3em 2em;
+
+        .builder-item{
+            flex: 1;
+            min-height: 80vh;
+            border: 1px solid black;
+        }
+
+        .traits{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            .traits-item{
+                flex: 1;
+
+            }
+        }
+        .chosen{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            .chosen-item{
+                flex: 1;
+            }
+        }
+    }
+}
