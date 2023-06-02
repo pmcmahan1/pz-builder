@@ -1,43 +1,173 @@
 .app{
+
+    .points{
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 6em;
+    }
+
     .builder{
         display: flex;
-        padding: 3em 2em;
+        padding: 3em 2em 1em;
+        gap: 2em;
 
         .builder-item{
             flex: 1;
-            min-height: 80vh;
-            border: 1px solid black;
+            max-height: 80vh;
         }
 
         .occupation{
             display: flex;
             flex-direction: column;
+            overflow-y: scroll;
+            border: 1px solid gray;
+
 
             .occupation-item{
                 display: flex;
-                min-height: 6vh;
+                min-height: 8vh;
                 align-items: center;
                 border-bottom: 1px solid gray;
-                font-size: 22px;
+                font-size: 20px;
+                padding-left: 5px;
             }
         }
 
         .traits{
             display: flex;
             flex-direction: column;
-            gap: 1em;
+            gap: 2em;
+
             .traits-item{
+                display: flex;
+                flex-direction: column;
                 flex: 1;
 
             }
         }
+
         .chosen{
             display: flex;
             flex-direction: column;
-            gap: 1em;
+            gap: 2em;
+
             .chosen-item{
                 flex: 1;
+                border: 1px solid gray;
+
+                .chosen-header{
+                    border-bottom: 1px solid gray;
+                    padding: 10px 20px;
+                }
+
+                .chosen-container{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                }
+
+
+                .chosen-container-item{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0.5em;
+                    color: green;
+                    border-bottom: 1px solid gray;
+
+                }
+
+            }
+        }
+
+        .positive{
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            border: 1px solid gray;
+
+            .positive-header{
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 20px;
+            }
+
+            .positive-container{
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+                border-top: 1px solid gray;
+
+
+
+                
+                .positive-item{
+                    display: flex;
+                    justify-content: flex-start;
+                    padding: 0.5em;
+                    color: green;
+                    font-size: 16px;
+                    font-weight: 600;
+                    border-bottom: 1px solid gray;
+
+                    .positive-item-name{
+                    margin-left: 10px;
+                    margin-right: auto;
+                    }
+                }
+            }
+        }
+        .negative{
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            border: 1px solid gray;
+
+            .negative-container{
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+
+
+                
+                .negative-item{
+                    display: flex;
+                    justify-content: flex-start;
+                    padding: 0.5em;
+                    color: red;
+                    font-size: 16px;
+                    font-weight: 600;
+                    border-bottom: 1px solid gray;
+
+                    .negative-item-name{
+                    margin-left: 10px;
+                    margin-right: auto;
+                    }
+                }
             }
         }
     }
+
+    .selected-container{
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+
+
+        .selected-item{
+            display: flex;
+            justify-content: flex-start;
+            padding: 0.5em;
+            color: green;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid gray;
+
+            .selected-item-name{
+                margin-left: 10px;
+                margin-right: auto;
+                }
+        }
+    }
+    
 }
