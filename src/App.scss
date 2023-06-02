@@ -9,6 +9,19 @@
             border: 1px solid black;
         }
 
+        .occupation{
+            display: flex;
+            flex-direction: column;
+
+            .occupation-item{
+                display: flex;
+                min-height: 6vh;
+                align-items: center;
+                border-bottom: 1px solid gray;
+                font-size: 22px;
+            }
+        }
+
         .traits{
             display: flex;
             flex-direction: column;

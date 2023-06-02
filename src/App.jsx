@@ -8,7 +8,9 @@ function App() {
 <div className="app">
   <div className="builder">
     <div className="builder-item occupation">
-      Occupation
+      <div className="occupation-item">Fire Officer</div>
+      <div className="occupation-item">Fire Officer</div>
+      <div className="occupation-item">Fire Officer</div>
     </div>
     <div className="builder-item traits">
       <div className="traits-item top">Traits</div>
