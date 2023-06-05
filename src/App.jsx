@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.scss";
 import occupationsData from "./occupations";
 import goodtraitsData from "./goodtraits";
@@ -19,7 +19,7 @@ function App() {
     return  <div key={item.name} onClick={() => handleChosenClick(item)} className={`selected-item ${item.value > 0 ? 'red' : 'green'}`}>
     <div className="selected-item-icon"><img src={item.icon} alt="" /></div>
     <div className="selected-item-name">{item.name}</div>
-    <div className="selected-item-points">{item.value}</div>
+    <div className="selected-item-points">{`${item.value > 0 ? "+" : ""}`}{item.value}</div>
   </div>
   })
 
@@ -45,11 +45,25 @@ function App() {
   }
 
   const handleChosenClick = (item) => {
-    console.log(item)
+    setSelectedTraits(prevTraits => {
+      return prevTraits.filter(prev => prev !== item)
+    })
     
   }
 
   const [startValue, setStartValue] = useState(jobs[0].props.value)
+  const [traitsValue, setTraitsValue] = useState(0)
+  const [totalValue, setTotalValue] = useState(0)
+
+  useEffect(() => {
+    const values = selectedTraits.map((item) => item.value)
+    const result = values.reduce((a, b) => a + b, 0)
+    setTraitsValue(result)
+  }, [selectedTraits])
+
+  useEffect(() => {
+    setTotalValue(startValue + traitsValue)
+  })
 
 
 
@@ -99,7 +113,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="points">Starting value: {startValue} Total value: {0}</div>
+      <div className="points">Points to Spend<span className={`${totalValue > -1 ? 'green' : 'red'}`}>{totalValue}</span></div>
     </div>
   );
 }
