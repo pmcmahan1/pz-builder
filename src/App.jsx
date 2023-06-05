@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import "./App.scss";
 import occupationsData from "./occupations";
 import goodtraitsData from "./goodtraits";
@@ -9,19 +9,48 @@ import Badtrait from "./Badtrait";
 
 function App() {
 
+
+
+  const [active, setActive] = useState(occupationsData[0])
+  const [selectedTraits, setSelectedTraits] = useState([])
+
+
+  const selectedlist = selectedTraits.map((item) => {
+    return  <div key={item.name} onClick={() => handleChosenClick(item)} className={`selected-item ${item.value > 0 ? 'red' : 'green'}`}>
+    <div className="selected-item-icon"><img src={item.icon} alt="" /></div>
+    <div className="selected-item-name">{item.name}</div>
+    <div className="selected-item-points">{item.value}</div>
+  </div>
+  })
+
+
   const jobs = occupationsData.map((item) => {
-    return <Occupation key={item.name} {...item} />;
+    return <Occupation key={item.name}{...item} onClick={() => handleJobChange(item)} className={`occupation-item ${active == item && 'highlight'}` }/>;
   });
   const goodtraits = goodtraitsData.map((item) => {
-    return <Goodtrait key={item.name} {...item} />;
+    return <Goodtrait key={item.name} {...item} onClick={() => handleTraitClick(item)} />;
   });
   const badtraits = badtraitsData.map((item) => {
-    return <Badtrait key={item.name} {...item} />;
+    return <Badtrait key={item.name} {...item} onClick={() => handleTraitClick(item)} />;
   });
 
 
-  const [startPoints, setStartPoints] = useState(0)
-  const [points, setPoints] = useState(0)
+  const handleJobChange = (item) => {
+    setStartValue(item.value)
+    setActive(item)
+  }
+
+  const handleTraitClick = (item) => {
+    setSelectedTraits(prevState => [...prevState, item ] )
+  }
+
+  const handleChosenClick = (item) => {
+    console.log(item)
+    
+  }
+
+  const [startValue, setStartValue] = useState(jobs[0].props.value)
+
 
 
 
@@ -52,11 +81,7 @@ function App() {
           <div className="chosen-item">
             <div className="chosen-header">Chosen Traits</div>
             <div className="selected-container">
-              <div className="selected-item">
-                <div className="selected-item-icon">A</div>
-                <div className="selected-item-name">Speed Demon</div>
-                <div className="selected-item-points">-1</div>
-              </div>
+              {selectedlist}
             </div>
           </div>
           <div className="chosen-item">
@@ -74,7 +99,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="points">Points to spend {points}</div>
+      <div className="points">Starting value: {startValue} Total value: {0}</div>
     </div>
   );
 }

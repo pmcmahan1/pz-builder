@@ -2,8 +2,9 @@ import React from 'react'
 
 const Occupation = (props) => {
 
+
   return (
-    <div className='occupation-item'><img src={props.icon} alt="" />{props.name}</div>
+    <div className={props.className} onClick={props.onClick}><img src={props.icon} alt="" />{props.name}</div>
   )
 }
 
