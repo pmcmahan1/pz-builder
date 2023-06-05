@@ -10,11 +10,13 @@ import Badtrait from "./Badtrait";
 function App() {
 
 
-
+  // setting unemployed as the default selected job
   const [active, setActive] = useState(occupationsData[0])
+
+  // initializing selected traits as empty
   const [selectedTraits, setSelectedTraits] = useState([])
 
-
+  // List of selected traits
   const selectedlist = selectedTraits.map((item) => {
     return  <div key={item.name} onClick={() => handleChosenClick(item)} className={`selected-item ${item.value > 0 ? 'red' : 'green'}`}>
     <div className="selected-item-icon"><img src={item.icon} alt="" /></div>
@@ -23,16 +25,18 @@ function App() {
   </div>
   })
 
-
+ // Mapping over the three datas, creating an array of objects that return the divs
   const jobs = occupationsData.map((item) => {
     return <Occupation key={item.name}{...item} onClick={() => handleJobChange(item)} className={`occupation-item ${active == item && 'highlight'}` }/>;
   });
-  const goodtraits = goodtraitsData.map((item) => {
-    return <Goodtrait key={item.name} {...item} onClick={() => handleTraitClick(item)} />;
-  });
-  const badtraits = badtraitsData.map((item) => {
-    return <Badtrait key={item.name} {...item} onClick={() => handleTraitClick(item)} />;
-  });
+
+  const [goodtraits, setGoodTraits] = useState(goodtraitsData.map((item) => {
+    return <Goodtrait key={item.name} {...item} onClick={() => handleTraitClickGood(item)} />;
+  }));
+
+  const [badtraits, setBadTraits] = useState(badtraitsData.map((item) => {
+    return <Badtrait key={item.name} {...item} onClick={() => handleTraitClickBad(item)} />;
+  }));
 
 
   const handleJobChange = (item) => {
@@ -40,10 +44,23 @@ function App() {
     setActive(item)
   }
 
-  const handleTraitClick = (item) => {
+  //function that moves whatever object is clicked into the selected traits
+  const handleTraitClickGood = (item) => {
     setSelectedTraits(prevState => [...prevState, item ] )
+    setGoodTraits(prevTraits => {
+      return prevTraits.filter(prev => prev !== item)
+    })
+
   }
 
+  //function that moves whatever object is clicked into the selected traits
+  const handleTraitClickBad = (item) => {
+    setSelectedTraits(prevState => [...prevState, item ] )
+  
+  }
+
+
+  //Function that filters out an object on click if it's in the selected list
   const handleChosenClick = (item) => {
     setSelectedTraits(prevTraits => {
       return prevTraits.filter(prev => prev !== item)
@@ -51,10 +68,13 @@ function App() {
     
   }
 
+  //states to keep track of points to spend
   const [startValue, setStartValue] = useState(jobs[0].props.value)
   const [traitsValue, setTraitsValue] = useState(0)
   const [totalValue, setTotalValue] = useState(0)
 
+
+  // use effects that updates the points
   useEffect(() => {
     const values = selectedTraits.map((item) => item.value)
     const result = values.reduce((a, b) => a + b, 0)
