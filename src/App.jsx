@@ -157,16 +157,6 @@ function App() {
       value: 5,
       percent: 0
     },
-    {
-      name: "Axe",
-      value: 0,
-      percent: 0
-    },
-    {
-      name: "Sprinting",
-      value: 0,
-      percent: 0
-    },
   ])
 
   // use effects that updates the points and sorts traits by index
@@ -181,27 +171,6 @@ function App() {
     setTotalValue(startValue + traitsValue);
   });
 
-  // Sets the major skills from job select
-  useEffect(() => {
-    if (active.name == "Unemployed") {
-      let arr = skills
-      arr[0].value = 5
-      arr[1].value = 5
-      arr[2].value = 0
-      arr[3].value = 0
-      setSkills(arr)
-
-    } else if (active.name == "Fire Officer") {
-      let arr = skills
-      arr[0].value = 6
-      arr[1].value = 6
-      arr[2].value = 1
-      arr[2].percent = 75
-      arr[3].value = 1
-      arr[3].percent = 75
-      setSkills(arr)
-    }
-  }, [active]);
 
   return (
     <div className="app">
@@ -294,25 +263,11 @@ function App() {
           <div className="chosen-item">
             <div className="chosen-header">Major Skills</div>
             <div className="chosen-container">
-              {skills[2].value > 0 && (
-                <div className="chosen-container-item">
-                  <div className="chosen-item-name">{skills[2].name}</div>
-                  <div className="chosen-item-value">{skills[2].value}</div>
-                  <div className="chosen-item-percent">+{skills[2].percent}%</div>
-                </div>
-              )}
               <div className="chosen-container-item">
                 <div className="chosen-item-name">{skills[0].name}</div>
                 <div className="chosen-item-value">{skills[0].value}</div>
                 <div className="chosen-item-percent"></div>
               </div>
-              {skills[3].value > 0 && (
-                <div className="chosen-container-item">
-                  <div className="chosen-item-name">{skills[3].name}</div>
-                  <div className="chosen-item-value">{skills[3].value}</div>
-                  <div className="chosen-item-percent">+{skills[3].percent}%</div>
-                </div>
-              )}
               <div className="chosen-container-item">
                 <div className="chosen-item-name">{skills[1].name}</div>
                 <div className="chosen-item-value">{skills[1].value}</div>
