@@ -14,11 +14,10 @@ import axeman from "../public/goodtraits/axeman.png";
 import nutritionist from "../public/goodtraits/nutritionist.png";
 
 function App() {
-
   // CURRENT GOALS:
   // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
   // onhover display details about jobs and traits
-  // Figure out how to do the major skills 
+  // Figure out how to do the major skills
 
   // setting unemployed as the default selected job
   const [active, setActive] = useState(occupationsData[0]);
@@ -92,7 +91,6 @@ function App() {
   //function that moves whatever object is clicked into the selected traits
   const handleTraitClickGood = (item) => {
     setSelectedTraits((prevState) => [...prevState, item]);
-
     setGoodTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
@@ -106,7 +104,6 @@ function App() {
 
   //Function that removes an object on click in the selected list
   const handleChosenClick = (item) => {
-
     if (item.value < 0) {
       setGoodTraits((prevState) => [
         ...prevState,
@@ -153,14 +150,14 @@ function App() {
     {
       name: "Fitness",
       value: 5,
-      percent: 0
+      percent: 0,
     },
     {
       name: "Strength",
       value: 5,
-      percent: 0
+      percent: 0,
     },
-  ])
+  ]);
 
   // use effects that updates the points and sorts traits by index
   useEffect(() => {
@@ -173,7 +170,6 @@ function App() {
   useEffect(() => {
     setTotalValue(startValue + traitsValue);
   });
-
 
   return (
     <div className="app">
