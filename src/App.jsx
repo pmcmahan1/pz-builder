@@ -6,12 +6,12 @@ import badtraitsData from "./badtraits";
 import Occupation from "./Occupation";
 import Goodtrait from "./Goodtrait";
 import Badtrait from "./Badtrait";
-import nightowl from "../public/goodtraits/nightowl.png";
-import burglar from "../public/goodtraits/burglar.png";
-import cook2 from "../public/goodtraits/cook2.png";
-import desensitized from "../public/goodtraits/desensitized.png";
-import axeman from "../public/goodtraits/axeman.png";
-import nutritionist from "../public/goodtraits/nutritionist.png";
+import nightowl from "./assets/nightowl.png";
+import burglar from "./assets/burglar.png";
+import cook2 from "./assets/cook2.png";
+import desensitized from "./assets/desensitized.png";
+import axeman from "./assets/axeman.png";
+import nutritionist from "./assets/nutritionist.png";
 
 function App() {
   // CURRENT GOALS:
