@@ -2,7 +2,8 @@ export default [
     {
         name: "Unemployed",
         value: 8,
-        icon: ""
+        icon: "",
+        desc: "8 free trait points."
     },  
     {
         name: "Fire Officer",

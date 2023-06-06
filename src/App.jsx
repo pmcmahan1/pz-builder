@@ -14,6 +14,12 @@ import axeman from "../public/goodtraits/axeman.png";
 import nutritionist from "../public/goodtraits/nutritionist.png";
 
 function App() {
+
+  // CURRENT GOALS:
+  // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
+  // onhover display details about jobs and traits
+  // Figure out how to do the major skills 
+
   // setting unemployed as the default selected job
   const [active, setActive] = useState(occupationsData[0]);
 
@@ -140,9 +146,6 @@ function App() {
       return a.props.index > b.props.index ? 1 : -1;
     });
     setBadTraits(sortedDataBad);
-    const sortedDataSelected = [...selectedlist].sort((a, b) => {
-      return a.props.index > b.props.index ? 1 : -1;
-    });
   }
 
   //Array of skills
