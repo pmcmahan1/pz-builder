@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./App.scss";
+
 import occupationsData from "./occupations";
 import goodtraitsData from "./goodtraits";
 import badtraitsData from "./badtraits";
+
 import Occupation from "./Occupation";
 import Goodtrait from "./Goodtrait";
 import Badtrait from "./Badtrait";
+
 import nightowl from "./assets/nightowl.png";
 import burglar from "./assets/burglar.png";
 import cook2 from "./assets/cook2.png";
@@ -17,7 +20,7 @@ function App() {
   // CURRENT GOALS:
   // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
   // onhover display details about jobs and traits
-  // Figure out how to do the major skills
+  // Figure out how to properly store the major skills data and display it
 
   // setting unemployed as the default selected job
   const [active, setActive] = useState(occupationsData[0]);
@@ -46,6 +49,7 @@ function App() {
   });
 
   // Mapping over three data sheets for the traits values/names/etc.
+  // Jobs data
   const jobs = occupationsData.map((item) => {
     return (
       <Occupation
@@ -56,7 +60,8 @@ function App() {
       />
     );
   });
-
+  
+  //Good traits (green)
   const [goodtraits, setGoodTraits] = useState(
     goodtraitsData.map((item) => {
       return (
@@ -70,6 +75,7 @@ function App() {
     })
   );
 
+  //Bad traits (red)
   const [badtraits, setBadTraits] = useState(
     badtraitsData.map((item) => {
       return (
@@ -83,12 +89,14 @@ function App() {
     })
   );
 
+  //When change jobs, set the initial points value and set that job item as the active one
   const handleJobChange = (item) => {
     setStartValue(item.value);
     setActive(item);
   };
 
   //function that moves whatever object is clicked into the selected traits
+  //Currently the good and bad traits have their own function
   const handleTraitClickGood = (item) => {
     setSelectedTraits((prevState) => [...prevState, item]);
     setGoodTraits((prevTraits) => {
@@ -104,6 +112,12 @@ function App() {
 
   //Function that removes an object on click in the selected list
   const handleChosenClick = (item) => {
+    //This if else statement determines if the trait was a good or bad trait to put it back in
+    //the right list
+    //Maybe I can combine the good and bad traits array into one single array by using this condition?
+    //If that would be necessary for functionality I want.
+    //Just have one big 'traits' array and display them in the right area by if their value is positive
+    //or negative.
     if (item.value < 0) {
       setGoodTraits((prevState) => [
         ...prevState,
@@ -128,12 +142,13 @@ function App() {
     });
   };
 
-  //states to keep track of points to spend
+  //states to keep track of points to spend, the inital job value, the value of all the traits, and 
+  //finally the total value that is displayed.
   const [startValue, setStartValue] = useState(jobs[0].props.value);
   const [traitsValue, setTraitsValue] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
 
-  //Actively sorts so traits return to where they need to be by index
+  //Actively sorts so traits return to where they need to be by an index number
   function handleSort() {
     const sortedDataGood = [...goodtraits].sort((a, b) => {
       return a.props.index > b.props.index ? 1 : -1;
@@ -145,7 +160,7 @@ function App() {
     setBadTraits(sortedDataBad);
   }
 
-  //Array of skills
+  //Array of skills, not sure if this is the best way to do it...
   const [skills, setSkills] = useState([
     {
       name: "Fitness",
@@ -159,7 +174,7 @@ function App() {
     },
   ]);
 
-  // use effects that updates the points and sorts traits by index
+  // use effects that updates the points and sorts traits by index on change
   useEffect(() => {
     const values = selectedTraits.map((item) => item.value);
     const result = values.reduce((a, b) => a + b, 0);
@@ -167,6 +182,7 @@ function App() {
     handleSort();
   }, [selectedTraits]);
 
+  //adds the job value and selected traits value to display. working fine.
   useEffect(() => {
     setTotalValue(startValue + traitsValue);
   });
@@ -191,6 +207,15 @@ function App() {
           <div className="chosen-item">
             <div className="chosen-header">Chosen Traits</div>
             <div className="selected-container">
+              {/*
+              Bunch of conditional renders for the 'special' traits given my certain jobs 
+              if the job name is veteran, displays a trait only given to veterans for example.
+              These traits are special in that they have no cost so don't have to be factored
+              into the points. Still unsure if this is a good way to do it, ESPECIALLY since
+              a few of the traits are also selectable in the good traits list. For example,
+              nutritionist is a selectable good trait, but the fitness instructor gives it for free,
+              so i'll have to somehow disable/remove the nutritionist trait whenever that job is selected.
+              */}
               {active.name == "Veteran" && (
                 <div className={`selected-item`}>
                   <div className="selected-item-icon">
@@ -262,6 +287,11 @@ function App() {
           <div className="chosen-item">
             <div className="chosen-header">Major Skills</div>
             <div className="chosen-container">
+              {/*
+              Currently how the major skills are displayed by grabbing the values
+              from the skills state array. Unsure how i'll do this going forward,
+              maybe conditional renders, if axe skill > 0 then display it here probably.
+              */}
               <div className="chosen-container-item">
                 <div className="chosen-item-name">{skills[0].name}</div>
                 <div className="chosen-item-value">{skills[0].value}</div>
