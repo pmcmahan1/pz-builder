@@ -75,10 +75,21 @@
 
                 .chosen-container-item{
                     display: flex;
-                    justify-content: space-between;
                     padding: 0.5em;
                     color: green;
                     border-bottom: 1px solid gray;
+
+                    .chosen-item-name{
+                        flex: 2;
+                    }
+                    .chosen-item-value{
+                        flex: 1;
+
+                    }
+                    .chosen-item-percent{
+                        flex: 1;
+
+                    }
 
                 }
 

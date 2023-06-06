@@ -77,7 +77,7 @@ export default [
     {
         name: "Lumberjack",
         value: 0,
-        icon: "../public/occupations/doctor.png"
+        icon: "../public/occupations/lumberjack.png"
     }, 
     {
         name: "Fitness Instructor",
