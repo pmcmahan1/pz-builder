@@ -5,7 +5,8 @@ const Occupation = (props) => {
     <div
       className={props.className}
       onClick={props.onClick}
-      onMouseEnter={(e) => console.log(props.desc)}
+      onMouseEnter={props.onMouseEnter} 
+      onMouseLeave={props.onMouseLeave}
     >
       <img src={props.icon} alt="" />
       {props.name}

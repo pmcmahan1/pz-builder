@@ -58,6 +58,8 @@ function App() {
       <div
         key={item.name}
         onClick={() => handleChosenClick(item)}
+        onMouseEnter={(e) => handleHover(e, item)}
+        onMouseLeave={(e) => setDesc("")}
         className={`selected-item ${item.value > 0 ? "red" : "green"}`}
       >
         <div className="selected-item-icon">
@@ -80,11 +82,13 @@ function App() {
         key={item.name}
         {...item}
         onClick={() => handleJobChange(item)}
+        onMouseEnter={(e) => handleHover(e, item)}
+        onMouseLeave={(e) => setDesc("")}
         className={`occupation-item ${active == item && "highlight"}`}
       />
     );
   });
-  
+
   //Good traits (green)
   const [goodtraits, setGoodTraits] = useState(
     goodtraitsData.map((item) => {
@@ -94,11 +98,12 @@ function App() {
           key={item.name}
           {...item}
           onClick={() => handleTraitClickGood(item)}
+          onMouseEnter={(e) => handleHover(e, item)}
+          onMouseLeave={(e) => setDesc("")}
         />
       );
     })
   );
-
 
   //Bad traits (red)
   const [badtraits, setBadTraits] = useState(
@@ -109,6 +114,8 @@ function App() {
           key={item.name}
           {...item}
           onClick={() => handleTraitClickBad(item)}
+          onMouseEnter={(e) => handleHover(e, item)}
+          onMouseLeave={(e) => setDesc("")}
         />
       );
     })
@@ -132,7 +139,7 @@ function App() {
     // const sameAsBadTraits = badtraits.find(x => x.props.variant === item.variant)
     // setBadTraits(badtraits.filter(x=>x.props.variant === sameAsBadTraits.variant))
   };
-    
+
   const handleTraitClickBad = (item) => {
     setSelectedTraits((prevState) => [...prevState, item]);
     setBadTraits((prevTraits) => {
@@ -176,7 +183,7 @@ function App() {
     });
   };
 
-  //states to keep track of points to spend, the inital job value, the value of all the traits, and 
+  //states to keep track of points to spend, the inital job value, the value of all the traits, and
   //finally the total value that is displayed.
   const [startValue, setStartValue] = useState(jobs[0].props.value);
   const [traitsValue, setTraitsValue] = useState(0);
@@ -284,7 +291,15 @@ function App() {
     }
   });
 
+  //the description of whatever trait/job is being hovered
+  const [desc, setDesc] = useState("")
+  const [isShown, setIsShown] = useState(false);
+  const [position, setPosition] = useState([0,0])
 
+  function handleHover(e, item){
+    setDesc(item.desc)
+    setPosition([e.pageX,e.pageY])
+  }
 
   // use effects that updates the points and sorts traits by index on change
   useEffect(() => {
@@ -301,6 +316,10 @@ function App() {
 
   return (
     <div className="app">
+      {desc && <div className="desc" style={{
+        left: position[0],
+        top: position[1],
+      }}>{desc}</div>}
       <div className="builder">
         <div className="builder-item occupation">{jobs}</div>
         <div className="builder-item traits">
@@ -397,9 +416,7 @@ function App() {
           </div>
           <div className="chosen-item">
             <div className="chosen-header">Major Skills</div>
-            <div className="chosen-container">
-            {majorskills}
-            </div>
+            <div className="chosen-container">{majorskills}</div>
           </div>
         </div>
       </div>

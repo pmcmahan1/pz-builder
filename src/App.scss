@@ -1,4 +1,16 @@
 .app{
+    position: relative;
+
+    .desc{
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        border: 1px solid black;
+        color: white;
+        background-color: black;
+        max-width: 120px;
+        pointer-events: none
+    }
 
     .points{
         display: flex;
@@ -11,7 +23,6 @@
         display: flex;
         padding: 3em 2em 1em;
         gap: 2em;
-        position: relative;
 
         .builder-item{
             flex: 1;
