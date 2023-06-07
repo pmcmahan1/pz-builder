@@ -9,6 +9,7 @@
     min-height: 100vh;
     background-color: #333131a1;
     font-family: 'Volkhov', serif;
+    overflow: hidden;
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -28,8 +29,9 @@
     .header{
         display: flex;
         justify-content: center;
-        font-size: 48px;
+        font-size: 42px;
         padding-top: 0.5em;
+        text-align: justify;
     }
 
     .footer{
@@ -40,7 +42,9 @@
         bottom: 0;
         width: 100%;
         background: #141414a1;
-        height: 2em;
+        font-size: 14px;
+        padding: 2px;
+
 
         a{
             margin: 0px 5px;
@@ -68,17 +72,21 @@
         justify-content: flex-end;
         margin-right: 6em;
         gap: 1em;
+        font-size: 24px;
+        position: sticky;
     }
 
     .builder{
         display: flex;
-        padding: 2em 2em 1em;
+        padding: 2em 10em 1em;
         gap: 2em;
 
         .builder-item{
             flex: 1;
             max-height: 80vh;
             min-height: 0;
+            min-width: 230px;
+            overflow-x: hidden;
             
         }
 
@@ -263,4 +271,31 @@
         color: rgb(202, 24, 24) !important;
     }
     
+}
+
+@media screen and (max-width: 1024px){
+    .footer {
+        display: none !important;
+    }
+    .builder {
+        padding: 1em !important;
+    }
+    .header {
+        font-size: 26px !important;
+    }
+
+}
+
+@media screen and (max-height: 768px){
+    .footer {
+        display: none !important;
+    }
+    .builder {
+        padding: 1em !important;
+    }
+    .header {
+        font-size: 26px !important;
+    }
+
+
 }
