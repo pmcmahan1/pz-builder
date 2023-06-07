@@ -153,15 +153,30 @@ function App() {
     // Couldn't get it to work right however.
     // const foundItemWithSameVariant = selectedTraits.find(x=>x.variant === item.variant)
     // const sameAsbadTraits = badTraits.find(x => x.props.variant === item.variant)
-    // setBadTraits(badTraits.filter(x=>x.props.variant === sameAsbadTraits.variant))
+    // console.log(sameAsbadTraits.props.variant)
+    // console.log(badTraits)
+    // console.log(badTraits.filter(x=>x.props.variant !== sameAsbadTraits.props.variant))
+    // setBadTraits(badTraits.filter(x=>x.props.variant !== sameAsbadTraits.props.variant))
+    handleVariant(item)
   };
+
 
   const handleTraitClickBad = (item) => {
     setSelectedTraits((prevState) => [...prevState, item]);
     setBadTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
+    handleVariant(item)
   };
+
+  const handleVariant = (item) => {
+    const sameAsgoodTraits = goodTraits.find(x => x.props.variant === item.variant)
+    const sameAsbadTraits = badTraits.find(x => x.props.variant === item.variant)
+    setBadTraits(badTraits.filter(x=>x.props.variant !== sameAsbadTraits.props.variant))
+    setGoodTraits(goodTraits.filter(x=>x.props.variant !== sameAsgoodTraits.props.variant))
+  }
+
+
 
   //Function that removes an object from selectedTraits and returns it back to
   //either goodTraits or badTraits depending on it's value.

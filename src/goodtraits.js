@@ -5,7 +5,7 @@ export default [
         index: 1,
         desc: "Drives very fast.",
         icon: "/pz-builder/goodtraits/speeddemon.png",
-
+        variant: "one",
     }, 
     {
         name: "Cat's Eyes",
@@ -19,6 +19,7 @@ export default [
         value: -2,
         index: 3,
         desc: "Transfers inventory items quickly.",
+        variant: "two",
         icon: "/pz-builder/goodtraits/dextrous.png"
     }, 
     {

@@ -5,14 +5,16 @@ export default [
         value: 1,
         index: 1,
         desc: "Drives very slow.",
-        icon: "/pz-builder/badtraits/sundaydriver.png"
+        icon: "/pz-builder/badtraits/sundaydriver.png",
+        variant: "one",
     }, 
     {
         name: "All Thumbs",
         value: 2,
         index: 2,
         desc: "Transfers inventory items slowly.",
-        icon: "/pz-builder/badtraits/allthumbs.png"
+        icon: "/pz-builder/badtraits/allthumbs.png",
+        variant: "two",
     }, 
     {
         name: "Clumsy",
