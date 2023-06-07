@@ -43,7 +43,6 @@ import mechanicSkills from "./jobSkills/mechanicSkills";
 function App() {
   // CURRENT GOALS:
   // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
-  // onhover display details about jobs and traits
   // Figure out how to properly store the major skills data and display it
 
   // setting unemployed as the default selected job

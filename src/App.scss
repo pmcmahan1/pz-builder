@@ -7,9 +7,11 @@
         display: flex;
         border: 1px solid black;
         color: white;
-        background-color: black;
+        background-color: rgb(19, 16, 16, 0.5);
         max-width: 120px;
-        pointer-events: none
+        pointer-events: none;
+        padding: 0.5em;
+    
     }
 
     .points{
