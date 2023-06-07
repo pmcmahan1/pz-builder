@@ -15,6 +15,7 @@ import cook2 from "./assets/cook2.png";
 import desensitized from "./assets/desensitized.png";
 import axeman from "./assets/axeman.png";
 import nutritionist from "./assets/nutritionist.png";
+import background from "./assets/background.jpg"
 
 // Importing in all of the default skills you get from jobs.
 import unemployedSkills from "./jobSkills/unemployedSkills";
@@ -43,6 +44,7 @@ import mechanicSkills from "./jobSkills/mechanicSkills";
 function App() {
   // CURRENT GOALS:
   // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
+  // ^The traits also have to re-appear if the trait is moved back into the unselected traits
   // Figure out how to properly store the major skills data and display it
 
   // setting unemployed as the default selected job
@@ -152,12 +154,6 @@ function App() {
 
   //Function that removes an object on click in the selected list
   const handleChosenClick = (item) => {
-    //This if else statement determines if the trait was a good or bad trait to put it back in
-    //the right list
-    //Maybe I can combine the good and bad traits array into one single array by using this condition?
-    //If that would be necessary for functionality I want.
-    //Just have one big 'traits' array and display them in the right area by if their value is positive
-    //or negative.
     if (item.value < 0) {
       setGoodTraits((prevState) => [
         ...prevState,
@@ -165,6 +161,8 @@ function App() {
           key={item.name}
           {...item}
           onClick={() => handleTraitClickGood(item)}
+          onMouseEnter={(e) => handleHover(e, item)}
+          onMouseLeave={(e) => setDesc("")}
         />,
       ]);
     } else {
@@ -174,6 +172,8 @@ function App() {
           key={item.name}
           {...item}
           onClick={() => handleTraitClickBad(item)}
+          onMouseEnter={(e) => handleHover(e, item)}
+          onMouseLeave={(e) => setDesc("")}
         />,
       ]);
     }
@@ -203,7 +203,7 @@ function App() {
   //This function updates the skills depending on what job is selected.
   //The jobs default skills are saved in a .js file imported
   //Later on I will have the traits selected modify the skills from the job selected
-  //This should be the 'base' stats.
+  //This should be the base stats.
   function handleJobSkills(item) {
     if (item.name === "Unemployed") {
       setSkills(unemployedSkills);
@@ -291,13 +291,18 @@ function App() {
   });
 
   //the description of whatever trait/job is being hovered
-  const [desc, setDesc] = useState("")
-  const [isShown, setIsShown] = useState(false);
-  const [position, setPosition] = useState([0,0])
+  const [desc, setDesc] = useState("");
+  //tracks the position of the mouse when displaying desc
+  const [position, setPosition] = useState([0, 0]);
 
-  function handleHover(e, item){
-    setDesc(item.desc)
-    setPosition([e.pageX,e.pageY])
+  function handleHover(e, item) {
+    setDesc(item.desc);
+    setPosition([e.pageX, e.pageY]);
+  }
+
+  function handleHoverUnique(e, desc) {
+    setDesc(desc);
+    setPosition([e.pageX, e.pageY]);
   }
 
   // use effects that updates the points and sorts traits by index on change
@@ -308,17 +313,25 @@ function App() {
     handleSort();
   }, [selectedTraits]);
 
-  //adds the job value and selected traits value to display. working fine.
+  //adds the job value and selected traits value to display.
   useEffect(() => {
     setTotalValue(startValue + traitsValue);
   });
 
   return (
     <div className="app">
-      {desc && <div className="desc" style={{
-        left: position[0],
-        top: position[1],
-      }}>{desc}</div>}
+      {desc && (
+        <div
+          className="desc"
+          style={{
+            left: position[0],
+            top: position[1],
+          }}
+        >
+          {desc}
+        </div>
+      )}
+      <div className="header">Project Zomboid Character Builder</div>
       <div className="builder">
         <div className="builder-item occupation">{jobs}</div>
         <div className="builder-item traits">
@@ -347,7 +360,13 @@ function App() {
               so i'll have to somehow disable/remove the nutritionist trait whenever that job is selected.
               */}
               {active.name == "Veteran" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(e, "Does not reach states of panic.")
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={desensitized} alt="" />
                   </div>
@@ -355,7 +374,16 @@ function App() {
                 </div>
               )}
               {active.name == "Security Guard" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(
+                      e,
+                      "Requires little sleep. Stays extra alert even when sleeping."
+                    )
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={nightowl} alt="" />
                   </div>
@@ -363,7 +391,16 @@ function App() {
                 </div>
               )}
               {active.name == "Burglar" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(
+                      e,
+                      "Can hotwire vehicles, less chance of breaking the lock of a window."
+                    )
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={burglar} alt="" />
                   </div>
@@ -371,7 +408,11 @@ function App() {
                 </div>
               )}
               {active.name == "Chef" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) => handleHoverUnique(e, "Know cooking.")}
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={cook2} alt="" />
                   </div>
@@ -379,7 +420,11 @@ function App() {
                 </div>
               )}
               {active.name == "Burger Flipper" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) => handleHoverUnique(e, "Know cooking.")}
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={cook2} alt="" />
                   </div>
@@ -387,7 +432,16 @@ function App() {
                 </div>
               )}
               {active.name == "Lumberjack" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(
+                      e,
+                      "Better at chopping trees. Faster axe swing."
+                    )
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={axeman} alt="" />
                   </div>
@@ -395,7 +449,16 @@ function App() {
                 </div>
               )}
               {active.name == "Fitness Instructor" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(
+                      e,
+                      "Can see the nutritional values of any food."
+                    )
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src={nutritionist} alt="" />
                   </div>
@@ -403,7 +466,16 @@ function App() {
                 </div>
               )}
               {active.name == "Mechanic" && (
-                <div className={`selected-item`}>
+                <div
+                  className={`selected-item`}
+                  onMouseEnter={(e) =>
+                    handleHoverUnique(
+                      e,
+                      "Familiar with the maintenance and repair of all vehicle models on the roads of Kentucky."
+                    )
+                  }
+                  onMouseLeave={(e) => setDesc("")}
+                >
                   <div className="selected-item-icon">
                     <img src="" alt="" />
                   </div>
@@ -425,6 +497,7 @@ function App() {
           {totalValue}
         </span>
       </div>
+      <div className="footer">Special thanks to <a href="https://pzwiki.net/wiki/Main_Page" target="_blank" rel="noopener noreferrer">The Project Zomboid wiki </a>for the icons and data. Background image by <a href="https://alphacoders.com/users/profile/88593" target="_blank" rel="noopener noreferrer">IQuit</a></div>
     </div>
   );
 }

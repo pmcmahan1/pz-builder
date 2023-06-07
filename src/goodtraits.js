@@ -54,14 +54,16 @@ export default [
         value: -4,
         index: 8,
         desc: "+1 Fishing.",
-        icon: "/goodtraits/angler.png"
+        icon: "/goodtraits/angler.png",
+        fishing: 1,
     }, 
     {
         name: "Baseball Player",
         value: -4,
         index: 9,
         desc: "+1 Long Blunt.",
-        icon: "/goodtraits/baseballplayer.png"
+        icon: "/goodtraits/baseballplayer.png",
+        fishing: 12,
     }, 
     {
         name: "Brave",

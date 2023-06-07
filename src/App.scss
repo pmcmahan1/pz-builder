@@ -1,5 +1,51 @@
 .app{
     position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(/src/assets/background.jpg);
+    color: white;
+    min-height: 100vh;
+    background-color: #333131a1;
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #383737;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+
+
+    .header{
+        display: flex;
+        justify-content: center;
+        font-size: 48px;
+        padding-top: 0.5em;
+    }
+
+    .footer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: #141414a1;
+        height: 2em;
+
+        a{
+            margin: 0px 5px;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            color: rgba(206, 120, 22, 0.527);
+        }
+    }
 
     .desc{
         position: absolute;
@@ -23,13 +69,14 @@
 
     .builder{
         display: flex;
-        padding: 3em 2em 1em;
+        padding: 2em 2em 1em;
         gap: 2em;
 
         .builder-item{
             flex: 1;
             max-height: 80vh;
             min-height: 0;
+            
         }
 
         .occupation{
@@ -37,6 +84,7 @@
             flex-direction: column;
             overflow-y: scroll;
             border: 1px solid gray;
+            background-color: rgba(39, 38, 38, 0.719);
 
 
             .occupation-item{
@@ -58,7 +106,7 @@
                 display: flex;
                 flex-direction: column;
                 flex: 1;
-
+                background-color: rgba(39, 38, 38, 0.719);
             }
         }
 
@@ -73,6 +121,7 @@
                 flex: 1;
                 border: 1px solid gray;
                 min-height: 0;
+                background-color: rgba(39, 38, 38, 0.719);
 
                 .chosen-header{
                     border-bottom: 1px solid gray;
@@ -90,7 +139,7 @@
                 .chosen-container-item{
                     display: flex;
                     padding: 0.5em;
-                    color: green;
+                    color: rgb(58, 197, 58);
                     border-bottom: 1px solid gray;
 
                     .chosen-item-name{
@@ -135,7 +184,7 @@
                     display: flex;
                     justify-content: flex-start;
                     padding: 0.5em;
-                    color: green;
+                    color: rgb(58, 197, 58);
                     font-size: 16px;
                     font-weight: 600;
                     border-bottom: 1px solid gray;
@@ -164,7 +213,7 @@
                     display: flex;
                     justify-content: flex-start;
                     padding: 0.5em;
-                    color: red;
+                    color: rgb(202, 24, 24);
                     font-size: 16px;
                     font-weight: 600;
                     border-bottom: 1px solid gray;
@@ -201,14 +250,14 @@
     }
 
     .highlight{
-        background-color: gray;
+        background-color: rgba(206, 120, 22, 0.295);
     }
 
     .green{
-        color: green !important;
+        color: rgb(58, 197, 58) !important;
     }
     .red{
-        color: red !important;
+        color: rgb(202, 24, 24) !important;
     }
     
 }
