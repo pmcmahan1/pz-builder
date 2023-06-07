@@ -3,7 +3,9 @@ export default [
         name: "Speed Demon",
         value: -1,
         index: 1,
+        variant: "one",
         icon: "/goodtraits/speeddemon.png",
+
     }, 
     {
         name: "Cat's Eyes",
@@ -15,6 +17,7 @@ export default [
         name: "Dextrous",
         value: -2,
         index: 3,
+        variant: "two",
         icon: "/goodtraits/dextrous.png"
     }, 
     {

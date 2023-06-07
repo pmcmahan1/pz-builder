@@ -3,12 +3,14 @@ export default [
         name: "Sunday Driver",
         value: 1,
         index: 1,
+        variant: "one",
         icon: "/badtraits/sundaydriver.png"
     }, 
     {
         name: "All Thumbs",
         value: 2,
         index: 2,
+        variant: "two",
         icon: "/badtraits/allthumbs.png"
     }, 
     {

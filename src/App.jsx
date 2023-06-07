@@ -16,6 +16,30 @@ import desensitized from "./assets/desensitized.png";
 import axeman from "./assets/axeman.png";
 import nutritionist from "./assets/nutritionist.png";
 
+// Importing in all of the default skills you get from jobs.
+import unemployedSkills from "./jobSkills/unemployedSkills";
+import fireofficerSkills from "./jobSkills/fireofficerSkills";
+import policeofficerSkills from "./jobSkills/policeofficerSkills";
+import parkrangerSkills from "./jobSkills/parkrangerSkills";
+import constructionworkerSkills from "./jobSkills/constructionworkerSkills";
+import securityguardSkills from "./jobSkills/securityguardSkills";
+import carpenterSkills from "./jobSkills/carpenterSkills";
+import burglarSkills from "./jobSkills/burglarSkills";
+import chefSkills from "./jobSkills/chefSkills";
+import repairmanSkills from "./jobSkills/repairmanSkills";
+import farmerSkills from "./jobSkills/farmerSkills";
+import fishermanSkills from "./jobSkills/fishermanSkills";
+import doctorSkills from "./jobSkills/doctorSkills";
+import veteranSkills from "./jobSkills/veteranSkills";
+import nurseSkills from "./jobSkills/nurseSkills";
+import lumberjackSkills from "./jobSkills/lumberjackSkills";
+import fitnessinstructorSkills from "./jobSkills/fitnessinstructorSkills";
+import burgerflipperSkills from "./jobSkills/burgerflipperSkills";
+import electricianSkills from "./jobSkills/electricianSkills";
+import engineerSkills from "./jobSkills/engineerSkills";
+import metalworkerSkills from "./jobSkills/metalworkerSkills";
+import mechanicSkills from "./jobSkills/mechanicSkills";
+
 function App() {
   // CURRENT GOALS:
   // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
@@ -75,6 +99,7 @@ function App() {
     })
   );
 
+
   //Bad traits (red)
   const [badtraits, setBadTraits] = useState(
     badtraitsData.map((item) => {
@@ -93,6 +118,7 @@ function App() {
   const handleJobChange = (item) => {
     setStartValue(item.value);
     setActive(item);
+    handleJobSkills(item);
   };
 
   //function that moves whatever object is clicked into the selected traits
@@ -102,12 +128,20 @@ function App() {
     setGoodTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
+    // const foundItemWithSameVariant = selectedTraits.find(x=>x.variant === item.variant)
+    // const sameAsBadTraits = badtraits.find(x => x.props.variant === item.variant)
+    // setBadTraits(badtraits.filter(x=>x.props.variant === sameAsBadTraits.variant))
   };
+    
   const handleTraitClickBad = (item) => {
     setSelectedTraits((prevState) => [...prevState, item]);
     setBadTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
+    // const sameAsGoodTraits = goodtraits.find(x => x.props.variant === item.variant)
+    // console.log(sameAsGoodTraits)
+    // setGoodTraits(goodtraits.filter(x=>x.props.variant === sameAsGoodTraits.variant))
+    // console.log(sameAsGoodTraits)
   };
 
   //Function that removes an object on click in the selected list
@@ -160,19 +194,97 @@ function App() {
     setBadTraits(sortedDataBad);
   }
 
-  //Array of skills, not sure if this is the best way to do it...
-  const [skills, setSkills] = useState([
-    {
-      name: "Fitness",
-      value: 5,
-      percent: 0,
-    },
-    {
-      name: "Strength",
-      value: 5,
-      percent: 0,
-    },
-  ]);
+  //This function updates the skills depending on what job is selected.
+  //The jobs default skills are saved in a .js file imported
+  //Later on I will have the traits selected modify the skills from the job selected
+  //This should be the 'base' stats.
+  function handleJobSkills(item) {
+    if (item.name === "Unemployed") {
+      setSkills(unemployedSkills);
+    } else if (item.name === "Fire Officer") {
+      setSkills(fireofficerSkills);
+    } else if (item.name === "Police Officer") {
+      setSkills(policeofficerSkills);
+    } else if (item.name === "Park Ranger") {
+      setSkills(parkrangerSkills);
+    } else if (item.name === "Construction Worker") {
+      setSkills(constructionworkerSkills);
+    } else if (item.name === "Security Guard") {
+      setSkills(securityguardSkills);
+    } else if (item.name === "Carpenter") {
+      setSkills(carpenterSkills);
+    } else if (item.name === "Burglar") {
+      setSkills(burglarSkills);
+    } else if (item.name === "Chef") {
+      setSkills(chefSkills);
+    } else if (item.name === "Repairman") {
+      setSkills(repairmanSkills);
+    } else if (item.name === "Farmer") {
+      setSkills(farmerSkills);
+    } else if (item.name === "Fisherman") {
+      setSkills(fishermanSkills);
+    } else if (item.name === "Doctor") {
+      setSkills(doctorSkills);
+    } else if (item.name === "Veteran") {
+      setSkills(veteranSkills);
+    } else if (item.name === "Nurse") {
+      setSkills(nurseSkills);
+    } else if (item.name === "Lumberjack") {
+      setSkills(lumberjackSkills);
+    } else if (item.name === "Fitness Instructor") {
+      setSkills(fitnessinstructorSkills);
+    } else if (item.name === "Burger Flipper") {
+      setSkills(burgerflipperSkills);
+    } else if (item.name === "Electrician") {
+      setSkills(electricianSkills);
+    } else if (item.name === "Engineer") {
+      setSkills(engineerSkills);
+    } else if (item.name === "Metalworker") {
+      setSkills(metalworkerSkills);
+    } else if (item.name === "Mechanic") {
+      setSkills(mechanicSkills);
+    }
+  }
+
+  // This function determines the xp boost you receive from having a skill
+  // Voids strength and fitness as they do not receive xp boosts
+  function handlePercent(item) {
+    let percent = 0;
+    if (item.name === "Fitness") {
+      percent = 0;
+    } else if (item.name === "Strength") {
+      percent = 0;
+    } else if (item.value === 0) {
+      percent = 0;
+    } else if (item.value === 1) {
+      percent = 75;
+    } else if (item.value === 2) {
+      percent = 100;
+    } else if (item.value >= 3) {
+      percent = 125;
+    }
+    return percent;
+  }
+
+  //Array of all the major skills in the game. Defaults to unemployed.
+  const [skills, setSkills] = useState(unemployedSkills);
+
+  const majorskills = skills.map((item) => {
+    let percent = handlePercent(item);
+    if (item.value > 0) {
+      return (
+        <div key={item.name} className="chosen-container-item">
+          <div className="chosen-item-name">{item.name}</div>
+          <div className="chosen-item-value">{item.value}</div>
+          <div className="chosen-item-percent">
+            {percent > 0 && `+${percent}%`}
+          </div>
+        </div>
+      );
+    }
+  });
+
+
 
   // use effects that updates the points and sorts traits by index on change
   useEffect(() => {
@@ -280,28 +392,13 @@ function App() {
                   <div className="selected-item-name">Amateur Mechanic</div>
                 </div>
               )}
-
               {selectedlist}
             </div>
           </div>
           <div className="chosen-item">
             <div className="chosen-header">Major Skills</div>
             <div className="chosen-container">
-              {/*
-              Currently how the major skills are displayed by grabbing the values
-              from the skills state array. Unsure how i'll do this going forward,
-              maybe conditional renders, if axe skill > 0 then display it here probably.
-              */}
-              <div className="chosen-container-item">
-                <div className="chosen-item-name">{skills[0].name}</div>
-                <div className="chosen-item-value">{skills[0].value}</div>
-                <div className="chosen-item-percent"></div>
-              </div>
-              <div className="chosen-container-item">
-                <div className="chosen-item-name">{skills[1].name}</div>
-                <div className="chosen-item-value">{skills[1].value}</div>
-                <div className="chosen-item-percent"></div>
-              </div>
+            {majorskills}
             </div>
           </div>
         </div>
