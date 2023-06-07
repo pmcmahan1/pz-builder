@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./App.scss";
 
+// All of the job and traits data
 import occupationsData from "./occupations";
-import goodtraitsData from "./goodtraits";
-import badtraitsData from "./badtraits";
+import goodTraitsData from "./goodtraits";
+import badTraitsData from "./badtraits";
 
 import Occupation from "./Occupation";
 import Goodtrait from "./Goodtrait";
 import Badtrait from "./Badtrait";
 
+// Local images for special job traits
 import nightowl from "./assets/nightowl.png";
 import burglar from "./assets/burglar.png";
 import cook2 from "./assets/cook2.png";
@@ -43,9 +45,18 @@ import mechanicSkills from "./jobSkills/mechanicSkills";
 
 function App() {
   // CURRENT GOALS:
-  // Make traits mutually exclusive (ex: can't take sunday driver if speed demon is selected)
-  // ^The traits also have to re-appear if the trait is moved back into the unselected traits
-  // Figure out how to properly store the major skills data and display it
+  // (1)
+  // Make traits mutually exclusive
+  // Full list of traits that are mutually exclusive to one another: https://pzwiki.net/wiki/Traits
+  // example: Speed Demon and Sunday Driver are mutually exclusive...
+  // If you select Speed Demon as a selectedTraits,
+  // Sunday Driver should no longer be an option from badTraits and vice versa.
+  // If you remove Speed Demon from selectedTraits, Sunday Driver should again appear in badTraits.
+
+  // (2)
+  // Figure out how to modify skills depending on what traits are in selectedTraits
+  // example: If angler is selectedTrait, add +1 to fishing skill. If feeble is selectedTrait,
+  // -2 to strength skill.
 
   // setting unemployed as the default selected job
   const [active, setActive] = useState(occupationsData[0]);
@@ -90,9 +101,9 @@ function App() {
     );
   });
 
-  //Good traits (green)
-  const [goodtraits, setGoodTraits] = useState(
-    goodtraitsData.map((item) => {
+  //Good traits initialization 
+  const [goodTraits, setGoodTraits] = useState(
+    goodTraitsData.map((item) => {
       return (
         <Goodtrait
           index={item.index}
@@ -106,9 +117,9 @@ function App() {
     })
   );
 
-  //Bad traits (red)
-  const [badtraits, setBadTraits] = useState(
-    badtraitsData.map((item) => {
+  //Bad traits initialization 
+  const [badTraits, setBadTraits] = useState(
+    badTraitsData.map((item) => {
       return (
         <Badtrait
           index={item.index}
@@ -136,9 +147,13 @@ function App() {
     setGoodTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
+    // Belows commented code was an idea on how to work out the mutually exclusive traits
+    // To the traits data, if they disabled one another, I added something like
+    // variant : "one", if they matched, they would be filtered from the list.
+    // Couldn't get it to work right however.
     // const foundItemWithSameVariant = selectedTraits.find(x=>x.variant === item.variant)
-    // const sameAsBadTraits = badtraits.find(x => x.props.variant === item.variant)
-    // setBadTraits(badtraits.filter(x=>x.props.variant === sameAsBadTraits.variant))
+    // const sameAsbadTraits = badTraits.find(x => x.props.variant === item.variant)
+    // setBadTraits(badTraits.filter(x=>x.props.variant === sameAsbadTraits.variant))
   };
 
   const handleTraitClickBad = (item) => {
@@ -146,13 +161,10 @@ function App() {
     setBadTraits((prevTraits) => {
       return prevTraits.filter((prev) => prev.props.name !== item.name);
     });
-    // const sameAsGoodTraits = goodtraits.find(x => x.props.variant === item.variant)
-    // console.log(sameAsGoodTraits)
-    // setGoodTraits(goodtraits.filter(x=>x.props.variant === sameAsGoodTraits.variant))
-    // console.log(sameAsGoodTraits)
   };
 
-  //Function that removes an object on click in the selected list
+  //Function that removes an object from selectedTraits and returns it back to
+  //either goodTraits or badTraits depending on it's value.
   const handleChosenClick = (item) => {
     if (item.value < 0) {
       setGoodTraits((prevState) => [
@@ -190,20 +202,20 @@ function App() {
 
   //Actively sorts so traits return to where they need to be by an index number
   function handleSort() {
-    const sortedDataGood = [...goodtraits].sort((a, b) => {
+    const sortedDataGood = [...goodTraits].sort((a, b) => {
       return a.props.index > b.props.index ? 1 : -1;
     });
     setGoodTraits(sortedDataGood);
-    const sortedDataBad = [...badtraits].sort((a, b) => {
+    const sortedDataBad = [...badTraits].sort((a, b) => {
       return a.props.index > b.props.index ? 1 : -1;
     });
     setBadTraits(sortedDataBad);
   }
 
   //This function updates the skills depending on what job is selected.
-  //The jobs default skills are saved in a .js file imported
-  //Later on I will have the traits selected modify the skills from the job selected
-  //This should be the base stats.
+  //The jobs default skills are saved in a .js file imported from jobSkills folder
+  //Later on I will have the selectedTraits modify skills.
+  //This should be the base stats I guess, and afterwards selectedTraits changes them.
   function handleJobSkills(item) {
     if (item.name === "Unemployed") {
       setSkills(unemployedSkills);
@@ -254,6 +266,7 @@ function App() {
 
   // This function determines the xp boost you receive from having a skill
   // Voids strength and fitness as they do not receive xp boosts
+  // Just for show, and works perfectly fine.
   function handlePercent(item) {
     let percent = 0;
     if (item.name === "Fitness") {
@@ -272,9 +285,10 @@ function App() {
     return percent;
   }
 
-  //Array of all the major skills in the game. Defaults to unemployed.
+  //Array of all the skills. Defaults to unemployed.
   const [skills, setSkills] = useState(unemployedSkills);
 
+  // This is how I display the skills. If the skills value is 0, it does not display.
   const majorskills = skills.map((item) => {
     let percent = handlePercent(item);
     if (item.value > 0) {
@@ -300,12 +314,14 @@ function App() {
     setPosition([e.pageX, e.pageY]);
   }
 
+  // This is for the unique traits given from jobs.
   function handleHoverUnique(e, desc) {
     setDesc(desc);
     setPosition([e.pageX, e.pageY]);
   }
 
   // use effects that updates the points and sorts traits by index on change
+  // Ensures the traits when removed from selectedTraits return to where they should be in order.
   useEffect(() => {
     const values = selectedTraits.map((item) => item.value);
     const result = values.reduce((a, b) => a + b, 0);
@@ -314,6 +330,7 @@ function App() {
   }, [selectedTraits]);
 
   //adds the job value and selected traits value to display.
+  // Points system working perfectly fine. No need to mess with.
   useEffect(() => {
     setTotalValue(startValue + traitsValue);
   });
@@ -340,10 +357,10 @@ function App() {
               <div className="positive-header-left">Description</div>
               <div className="positive-header-right">Cost</div>
             </div>
-            <div className="positive-container">{goodtraits}</div>
+            <div className="positive-container">{goodTraits}</div>
           </div>
           <div className="traits-item negative">
-            <div className="negative-container">{badtraits}</div>
+            <div className="negative-container">{badTraits}</div>
           </div>
         </div>
         <div className="builder-item chosen">
@@ -354,10 +371,11 @@ function App() {
               Bunch of conditional renders for the 'special' traits given my certain jobs 
               if the job name is veteran, displays a trait only given to veterans for example.
               These traits are special in that they have no cost so don't have to be factored
-              into the points. Still unsure if this is a good way to do it, ESPECIALLY since
-              a few of the traits are also selectable in the good traits list. For example,
-              nutritionist is a selectable good trait, but the fitness instructor gives it for free,
-              so i'll have to somehow disable/remove the nutritionist trait whenever that job is selected.
+              into the points. Still unsure if this was the best way to do it, but it works.
+              Only issue I could see in the future is, for example, nutritionist still being an option
+              from goodTraits even with the fitness instructor job as active, which gives that trait.
+              Maybe something like if active.name == "Fitness Instructor" then goodTraits.filter 
+              nutritionist?
               */}
               {active.name == "Veteran" && (
                 <div
