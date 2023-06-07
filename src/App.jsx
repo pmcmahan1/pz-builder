@@ -15,7 +15,7 @@ import cook2 from "./assets/cook2.png";
 import desensitized from "./assets/desensitized.png";
 import axeman from "./assets/axeman.png";
 import nutritionist from "./assets/nutritionist.png";
-import background from "./assets/background.jpg"
+
 
 // Importing in all of the default skills you get from jobs.
 import unemployedSkills from "./jobSkills/unemployedSkills";

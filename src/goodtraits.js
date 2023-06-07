@@ -4,7 +4,7 @@ export default [
         value: -1,
         index: 1,
         desc: "Drives very fast.",
-        icon: "/goodtraits/speeddemon.png",
+        icon: "/pz-builder/goodtraits/speeddemon.png",
 
     }, 
     {
